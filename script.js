@@ -3,7 +3,11 @@ $(function(){
 
 	const cells = $('.cell');
 	const reset = $('.reset');
+	const score = $('.yourScore');
+	const computerScore = $('.aiScore');
 
+	let youWin = 0;
+	let computerWins = 0;
 	let counter = 0;
 	const human = 'X';
 	const computer = 'O';
@@ -18,6 +22,7 @@ $(function(){
 		[2,4,6],
 	];
 
+	updateScore();
 	gameStart();
 
 
@@ -26,8 +31,11 @@ $(function(){
 
 	reset.on('click' ,function(){
 		counter = 0; 
+		youWin = 0;
+		computerWins = 0;
 		origBoard = [];
 		clearBoard();
+		updateScore();
 	});
 
 	cells.on('click',function(){
@@ -42,9 +50,20 @@ $(function(){
 		origBoard = cells.text().split('');
 
 		if(checkWinner('X',origBoard)){
-			console.log('Player 1 je pobjedio');
+			youWin++;
+			updateScore();
+			clearBoard();
+			counter=0;
 		}else if(checkWinner('O', origBoard)){
-			console.log('Player 2 je pobjedio')
+			computerWins++;
+			updateScore();
+			clearBoard();
+			counter=0;
+		}else if(counter>9){
+			origBoard = [];
+			counter = 0;
+			alert("Score is even");
+			clearBoard();
 		}else{
 			console.log('Nista za sada')
 		} 
@@ -71,5 +90,10 @@ $(function(){
 			if(bool) return bool;
 		}
 		return bool;
+	}
+	function updateScore(){
+		score.text(youWin);
+		computerScore.text(computerWins);
+	
 	}
 }); 
