@@ -1,0 +1,30 @@
+html,
+body{
+	width: 100%;
+}
+
+.cell{
+	border: 0.5rem solid #444;
+	text-align: center;
+	width: 10rem;
+	height: 10rem;
+	vertical-align: middle;
+	font-size: 5rem;
+	cursor: pointer;
+}
+
+.btn-outline-danger, .btn-outline-danger:visited{
+	position: absolute;
+	box-shadow: none;
+}
+
+.game{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,0%);
+}
+
+.leaderboard{
+	
+}
