@@ -28,47 +28,54 @@ $(function(){
 
 	function gameStart(){
 	origBoard = cells.text().split('');
-
+	$('.finished').toggleClass('hidden');
 	reset.on('click' ,function(){
-		counter = 0; 
 		youWin = 0;
 		computerWins = 0;
-		origBoard = [];
-		clearBoard();
-		updateScore();
+		resetAll();
+		console.log($('.finished').hasClass('.hidden'));
+		if(!($('.finished').hasClass('hidden'))){
+			$('.finished').toggleClass('hidden');
+			$('endText').text('');
+		}
 	});
 
 	cells.on('click',function(){
-		if(counter%2==0) {
+		if(counter%2==0){
 			$(this).text(human);
 			counter++;
-		}else{ 
+			weHaveAWinner();
+		}else{
 			$(this).text(computer);
 			counter++;
+			weHaveAWinner();
 		}
+	});
+	}
 
+	function weHaveAWinner(){
 		origBoard = cells.text().split('');
-
 		if(checkWinner('X',origBoard)){
 			youWin++;
 			updateScore();
 			clearBoard();
 			counter=0;
+			$('.finished').toggleClass('hidden');
+			$('.endText').append('You win');
 		}else if(checkWinner('O', origBoard)){
 			computerWins++;
 			updateScore();
 			clearBoard();
 			counter=0;
-		}else if(counter>9){
-			origBoard = [];
-			counter = 0;
-			alert("Score is even");
-			clearBoard();
+			$('.finished').toggleClass('hidden');
+			$('.endText').append('You lose');
+		}else if(counter>8){
+			console.log('Score is even');
+			resetAll();
 		}else{
 			console.log('Nista za sada')
 		} 
 
-	});
 	}
 
 	function clearBoard(){
@@ -94,6 +101,17 @@ $(function(){
 	function updateScore(){
 		score.text(youWin);
 		computerScore.text(computerWins);
-	
 	}
+
+	function resetAll(){
+		counter = 0; 
+		origBoard = [];
+		clearBoard();
+		updateScore();
+	}
+
+	$('.OKButton').on('click',function(){
+		$('.finished').toggleClass('hidden');
+		$('.endText').text('');
+	});
 }); 
